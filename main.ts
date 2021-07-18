@@ -1,52 +1,50 @@
-import {
-  Notice,
-  Plugin
-} from 'obsidian';
+import { App, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian'
+import SettingTab from './Views/SettingTab'
+import MyModal from './Views/MyModal'
 
-export default class MyPlugin extends Plugin {
+interface MyPluginSettings {
+	mySetting: string
+}
+const DEFAULT_SETTINGS: MyPluginSettings = {
+	mySetting: 'default'
+}
+
+
+export default class DailyManager extends Plugin {
+  settings: MyPluginSettings
+
+  onunload() {
+		console.log('unloading plugin')
+	}
+
+	async loadSettings() {
+		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData())
+	}
+
+	async saveSettings() {
+		await this.saveData(this.settings)
+	}
+
+  // My Code finally
   async onload() {
+    await this.loadSettings()
+    this.addSettingTab(new SettingTab(this.app, this))
     this.addCommand({
-      id: 'json-parse',
-      name: 'JSON.parse(selection)',
-      hotkeys: [{
-        modifiers: ["Mod", "Alt"],
-        key: "["
-      }],
-      callback: async() => {
-        let text = ''
-        if (window.getSelection) {
-          text = window.getSelection().toString();
-        } else if (document.selection && document.selection.type != "Control") {
-          text = document.selection.createRange().text;
-        }
-        try {
-          text = JSON.parse(text)
-          navigator.clipboard.writeText(text)
-          new Notice('Selection parsed and copied to clipboard.');
-        } catch(err) {
-          new Notice(`ERROR parsing selected text. Not valid JSON: ${err}`);
-        }
-      }
-    })
-
-    this.addCommand({
-      id: 'json-stringify',
-      name: 'JSON.stringify(selection)',
-      hotkeys: [{
-        modifiers: ["Mod", "Alt"],
-        key: "]"
-      }],
-      callback: () => {
-        let text = ''
-        if (window.getSelection) {
-          text = window.getSelection().toString();
-        } else if (document.selection && document.selection.type != "Control") {
-          text = document.selection.createRange().text;
-        }
-        text = JSON.stringify(text)
-        navigator.clipboard.writeText(text)
-        new Notice('Selection stringified and copied to clipboard.');
-      }
-    })
+			id: 'Daily Manager: Insert Todo',
+			name: 'Insert Todo',
+			// callback: () => {
+			// 	console.log('Simple Callback');
+			// },
+			checkCallback: (checking: boolean) => {
+				let leaf = this.app.workspace.activeLeaf
+				if (leaf) {
+					if (!checking) {
+						new MyModal(this.app).open()
+					}
+					return true
+				}
+				return false
+			}
+		})
   }
 }
