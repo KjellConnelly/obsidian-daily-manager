@@ -1,6 +1,7 @@
 import { App, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian'
 import SettingTab from './Views/SettingTab'
 import MyModal from './Views/MyModal'
+import updateDailyNotesNavigatorWithTodayDecal from './Functions/updateDailyNotesNavigatorWithTodayDecal'
 
 interface MyPluginSettings {
 	mySetting: string
@@ -14,7 +15,7 @@ export default class DailyManager extends Plugin {
   settings: MyPluginSettings
 
   onunload() {
-		console.log('unloading plugin')
+		//console.log('unloading plugin')
 	}
 
 	async loadSettings() {
@@ -46,5 +47,25 @@ export default class DailyManager extends Plugin {
 				return false
 			}
 		})
+		this.addCommand({
+			id: 'Daily Manager: Update Daily Notes Navigator',
+			name: 'Update Daily Notes Navigator',
+			checkCallback: (checking: boolean) => {
+				let leaf = this.app.workspace.activeLeaf
+				if (leaf) {
+					if (!checking) {
+						updateDailyNotesNavigatorWithTodayDecal()
+						new Notice("Updating Daily Notes!")
+					}
+					return true
+				}
+				return false
+			}
+		})
+
+
+		this.registerEvent(this.app.on('file-open', ()=>{
+			updateDailyNotesNavigatorWithTodayDecal()
+		}))
   }
 }

@@ -26,5 +26,25 @@ export default class SampleSettingTab extends PluginSettingTab {
 					this.plugin.settings.mySetting = value
 					await this.plugin.saveSettings()
 				}))
+
+		containerEl.createEl('h3', {text: "Today's Daily Decal"})
+
+		const decalToggle = new Setting(containerEl)
+		decalToggle.setName("Today's Daily Note Decal")
+			.setDesc('Decal Added to Navigator')
+			.addToggle(toggle => {
+				toggle.onChange(async isOn => {
+					console.log(isOn)
+				})
+			})
+
+		decalToggle.addText(textElement => {
+			textElement.setPlaceholder('Element HTML')
+			.setValue('')
+			.onChange(async (value) => {
+				this.plugin.settings.mySetting = value
+				await this.plugin.saveSettings()
+			})
+		})
 	}
 }
