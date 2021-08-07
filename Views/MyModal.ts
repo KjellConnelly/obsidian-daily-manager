@@ -4,8 +4,8 @@ import * as chrono from 'chrono-node'
 import MyModalContent from './MyModalContent.svelte'
 
 export default class MyModal extends Modal {
-	constructor(app: App) {
-		super(app)
+	constructor(plugin: DailyManager) {
+		super(plugin.app)
 	}
 
 	parsedDueDate(dateString : string) {

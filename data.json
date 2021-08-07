@@ -1,3 +1,5 @@
 {
-  "mySetting": "dadas"
+  "mySetting": "dadas",
+  "todayDecalOn": true,
+  "decalText": ""
 }

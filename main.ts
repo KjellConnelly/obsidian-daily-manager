@@ -4,10 +4,14 @@ import MyModal from './Views/MyModal'
 import updateDailyNotesNavigatorWithTodayDecal from './Functions/updateDailyNotesNavigatorWithTodayDecal'
 
 interface MyPluginSettings {
-	mySetting: string
+	mySetting: string,
+	todayDecalOn: boolean,
+	decalText: string,
 }
 const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
+	mySetting: 'default',
+	todayDecalOn: true,
+	decalText: '*'
 }
 
 
@@ -29,7 +33,7 @@ export default class DailyManager extends Plugin {
   // My Code finally
   async onload() {
     await this.loadSettings()
-    this.addSettingTab(new SettingTab(this.app, this))
+    this.addSettingTab(new SettingTab(this))
     this.addCommand({
 			id: 'Daily Manager: Insert Todo',
 			name: 'Insert Todo',
@@ -40,13 +44,15 @@ export default class DailyManager extends Plugin {
 				let leaf = this.app.workspace.activeLeaf
 				if (leaf) {
 					if (!checking) {
-						new MyModal(this.app).open()
+						new MyModal(this).open()
 					}
 					return true
 				}
 				return false
 			}
 		})
+
+		/*
 		this.addCommand({
 			id: 'Daily Manager: Update Daily Notes Navigator',
 			name: 'Update Daily Notes Navigator',
@@ -62,10 +68,15 @@ export default class DailyManager extends Plugin {
 				return false
 			}
 		})
+		*/
 
 
 		this.registerEvent(this.app.on('file-open', ()=>{
-			updateDailyNotesNavigatorWithTodayDecal()
+			updateDailyNotesNavigatorWithTodayDecal(this)
 		}))
+
+		setTimeout(()=>{
+			updateDailyNotesNavigatorWithTodayDecal(this)
+		}, 200)
   }
 }
