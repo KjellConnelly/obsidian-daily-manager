@@ -4,14 +4,26 @@ This plugin is used to quickly add future todos.
 ## Using Once Installed
 
 ### 1: Setup within Obsidian
-1. Open `Settings`
-  a. Click `Options > Community Plugins` and make sure `Daily Manager` is enabled (toggled on).
-  b. Click `Plugin Options > Daily Manager` to edit all your default options.
+- Open `Settings`.
+- Click `Options > Community Plugins` and make sure `Daily Manager` is enabled (toggled on).
+- Click `Plugin Options > Daily Manager` to edit all your default options.
 
-### 2: Using Commands
+
+### 2: Plugin Options
+
+#### 2a) Using Daily Notes Decals
+It's happened to me many times that I want to see where in my `daily-notes` folder is today in relation to other daily notes. Toggling this on will update the navigator to show you.
+
+![Showing Asterisk as Decal](images/decalExample.png)
+
+As you can see, there is a red `*` by default. You can change this to be a different character(s), or even type in html such as `<span style="color:green;">*</span>`.
+
+*Note:* The `Daily notes` plugin will let you set where your daily notes folder is stored. To use this plugin, you currently MUST put your folder at the root level of your vault, like in the image above. This plugin uses both `New file location` (directory where new files are created for via the `Daily notes` plugin), as well as `Date format` from the `Daily Notes` > `Plugin Options` to locate the element that needs a decal added. You do not need to use the `MM-DD-YYYY` format like I use in the above image.
+
+### 3: Using Commands
 Open the `Command Palette` (CMD+P by default on macOS) and start typing in `Daily Manager`. You will see a list of commands.
 
-#### Daily Manager: Insert Todo
+#### 3a) Daily Manager: Insert Todo
 This is the bread and butter of adding new todos.
 
 
