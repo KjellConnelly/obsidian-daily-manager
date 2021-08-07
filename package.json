@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
-    "build": "rollup --config rollup.config.js"
+    "build": "rollup --config rollup.config.js",
+    "deployLocally": "rollup --config rollup.config.js && mkdir obsidian-daily-manager && cp main.js obsidian-daily-manager && cp manifest.json obsidian-daily-manager && mkdir -p ../../../../My_Obsidian/.obsidian/plugins/obsidian-daily-manager && rm -r ../../../../My_Obsidian/.obsidian/plugins/obsidian-daily-manager && mv obsidian-daily-manager ../../../../My_Obsidian/.obsidian/plugins"
   },
   "keywords": [],
   "author": "",
