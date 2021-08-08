@@ -2,12 +2,37 @@ import getDailyNoteSettings from './getDailyNoteSettings'
 
 function updateDailyNotesNavigatorWithTodayDecal(plugin) {
 	const {decalText, todayDecalOn} = plugin.settings
-	console.log(plugin.settings)
 	let newText = todayDecalOn ? (decalText.length > 0 ? decalText : "*") :  ""
 	let logString = ''
 
 	const dailyNoteSettings = getDailyNoteSettings()
 	const navFolders = document.getElementsByClassName("nav-folder")
+
+
+/*
+	/////// testing
+	const {workspace, vault, metadataCache, fileManager} = plugin.app
+
+	// gets all markdown files as [TFile] objects
+	const mdFiles = vault.getMarkdownFiles()
+
+	// finds config file
+	const {configDir} = vault
+
+	// useful for checking workspace leaves
+	workspace.iterateAllLeaves(leaf=>{
+		if (leaf.getDisplayText().toLowerCase() == 'file explorer') {
+			console.log(leaf.view.containerEl)
+		}
+	})
+
+	// Useful for iterating through metadata for sections/heading
+	mdFiles.forEach(file=>{
+		console.log(metadataCache.getFileCache(file))
+	})
+
+	////////
+*/
 
 	let dailyNotesFolder = undefined
 	for (let i = 0; i < navFolders.length; i++) {

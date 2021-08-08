@@ -1,5 +1,6 @@
 {
   "mySetting": "dadas",
-  "todayDecalOn": true,
-  "decalText": ""
+  "todayDecalOn": false,
+  "decalText": "",
+  "jsonDirectory": ""
 }
