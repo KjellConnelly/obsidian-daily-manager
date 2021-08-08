@@ -2,5 +2,5 @@
   "mySetting": "dadas",
   "todayDecalOn": false,
   "decalText": "",
-  "jsonDirectory": ""
+  "jsonDirectory": ".obsidian/.daily-manager"
 }

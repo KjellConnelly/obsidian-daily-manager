@@ -7,6 +7,11 @@ export default class ObsidianDevShortcuts {
     this.plugin = plugin
   }
 
+  /*
+  const str = await this.plugin.app.vault.adapter.read(filePath)
+  console.log(str)
+  */
+
   setTextAtPath({
     path = "",
     pathFromConfigFile = false,
@@ -34,9 +39,20 @@ export default class ObsidianDevShortcuts {
           if (type == 'folder') {
             resolve()
           } else {
-            const newFile : TFile = await this.getTFileByPath({path:path})
-            await vault.modify(newFile, text)
-            resolve()
+            const {tfile, data} = await this.getFileDataByPath({path:path})
+            console.log(`tfile:`)
+            console.log(tfile)
+            console.log(`data:`)
+            console.log(data)
+            if (tfile != undefined) {
+              // TFile found. Able to modify this way.
+              await vault.modify(tfile, text)
+              resolve()
+            } else {
+              // TFile not found, just OVERWRITE IT!
+              await vault.adapter.write(path, text)
+              resolve()
+            }
           }
         }
       } catch(err) {
@@ -45,7 +61,7 @@ export default class ObsidianDevShortcuts {
     })
   }
 
-  getTFileByPath({
+  getFileDataByPath({
     path = "",
     pathFromConfigFile = false,
   } = {}) {
@@ -58,9 +74,21 @@ export default class ObsidianDevShortcuts {
         if (!exists) {
           reject(`No file exists at path ${path}`)
         } else {
-          const abst : TAbstractFile = vault.getAbstractFileByPath(path)
-          if (abst instanceof TFile ) {}
-          resolve(abst)
+          const tfile : TAbstractFile = vault.getAbstractFileByPath(path)
+          
+          //if (tfile instanceof TFile ) {}
+          if (tfile != undefined) {
+            resolve({
+              tfile:tfile,
+              data:tfile.unsafeCachedData,
+            })
+          } else {
+            const data = await vault.adapter.read(path)
+            resolve({
+              tfile:undefined,
+              data:data
+            })
+          }
         }
       } catch(err) {
         console.log(`getTFileByPath for path ${path} error: ${err}`)

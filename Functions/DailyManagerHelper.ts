@@ -8,7 +8,7 @@ export default class DailyManagerHelper {
 
   async loadDailyManagerData() {
     const {todayDecalOn, decalText, jsonDirectory} = this.plugin.settings
-    let jsonFileLocation = jsonDirectory || "daily-manager-json"
+    let jsonFileLocation = jsonDirectory || ".obsidian/.daily-manager"
     while (jsonFileLocation.endsWith('/')) {
       jsonFileLocation = jsonFileLocation.replace(/\/$/, '')
     }
@@ -16,8 +16,8 @@ export default class DailyManagerHelper {
     const {shortcuts} = this.plugin
     return new Promise(async (resolve, reject)=>{
       try {
-        await shortcuts.setTextAtPath({path:jsonFileLocation,type:'folder',pathFromConfigFile:false})
         const filePath = `${jsonFileLocation}/test.json`
+        await shortcuts.setTextAtPath({path:jsonFileLocation,type:'folder',pathFromConfigFile:false})
         const file = await shortcuts.setTextAtPath({path:filePath,type:'file',pathFromConfigFile:false,text:'# HELLO7!',defaultText:"{}"})
         resolve()
       } catch(err) {

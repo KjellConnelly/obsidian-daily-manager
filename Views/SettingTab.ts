@@ -48,8 +48,8 @@ export default class SampleSettingTab extends PluginSettingTab {
 		shortcuts.addTextInputSetting({
 			containerEl:containerEl,
 			name:`JSON Directory (Obsidian doesn't see .json files)`,
-			description:'Where do you want your event files saved? Note: If you change this, you will need to manually move files before you run a new command which accesses this directory. We recommend somewhere in your resources folder.',
-			placeholder:'daily-manager-json/',
+			description:'Where do you want your event files saved? Note: If you change this, you will need to manually move files before you run a new command which accesses this directory. By default, this is in your config directory, which is in a hidden folder.',
+			placeholder:'.obsidian/.daily-manager',
 			key:'jsonDirectory',
 		})
 /*
