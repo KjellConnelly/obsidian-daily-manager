@@ -4,6 +4,8 @@ export default class DailyManagerHelper {
   constructor(plugin) {
     this.plugin = plugin
     this.loadDailyManagerData()
+    console.log(window)
+    console.log(window.Capacitor)
   }
 
   async loadDailyManagerData() {
